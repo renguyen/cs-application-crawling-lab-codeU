@@ -77,14 +77,13 @@ public class WikiCrawler {
 	 */
 	// NOTE: absence of access level modifier means package-level
 	void queueInternalLinks(Elements paragraphs) {
-        Elements links = paragraphs.select("a");
-				for (Element link : links) {
-					if (link.attr("href").indexOf("wiki") != -1 || link.attr("href").indexOf("/w/") != -1) {
-						queue.add("https://en.wikipedia.org" + link.attr("href"));
-					} /*else {
-						if (link.attr("class").indexOf("external") == -1)
-							System.out.println(link);
-					}*/
+        for (Element paragraph : paragraphs) {
+					Elements links = paragraph.select("a[href]");
+					for (Element link : links) {
+						if (link.attr("href").startsWith("/wiki/")) {
+							queue.add(link.attr("abs:href"));
+						}
+					}
 				}
 	}
 
@@ -104,9 +103,6 @@ public class WikiCrawler {
 		String res;
 		do {
 			res = wc.crawl(false);
-
-            // REMOVE THIS BREAK STATEMENT WHEN crawl() IS WORKING
-            break;
 		} while (res == null);
 
 		Map<String, Integer> map = index.getCounts("the");

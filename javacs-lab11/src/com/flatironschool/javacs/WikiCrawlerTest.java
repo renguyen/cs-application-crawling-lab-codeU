@@ -63,15 +63,15 @@ public class WikiCrawlerTest {
 
 		String res = wc.crawl(true);
 		assertThat(url1.equals(res), is(true));
-		assertThat(wc.queueSize(), is(340));
+		assertThat(wc.queueSize(), is(396));
 
 		res = wc.crawl(true);
 		assertThat(url2.equals(res), is(true));
-		assertThat(wc.queueSize(), is(561));
+		assertThat(wc.queueSize(), is(653));
 
 		res = wc.crawl(true);
 		assertThat(url3.equals(res), is(true));
-		assertThat(wc.queueSize(), is(609));
+		assertThat(wc.queueSize(), is(704));
 
 		Map<String, Integer> map = index.getCounts("the");
 
